@@ -1,0 +1,3 @@
+[submodule "NuakeUI"]
+	path = NuakeUI
+	url = https://github.com/antopilo/NuakeUI.git

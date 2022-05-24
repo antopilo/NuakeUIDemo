@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include "MyInputManager.h"
-
+#define GLFW_INCLUDE_NONE ;
 #include <NuakeRenderer/Window.h>
 #include <NuakeRenderer/NuakeRenderer.h>
 
+// UI components
 #include <NuakeUI/Canvas.h>
 #include <NuakeUI/Button.h>
 #include <NuakeUI/Checkbox.h>
+#include <NuakeUI/Text.h>
+
+#include <NuakeUI/Renderer.h>
 
 void DrawUI(std::shared_ptr<NuakeUI::Node> node)
 {
@@ -24,6 +28,7 @@ void main()
 	auto window = NuakeRenderer::Window("Hello");
 	NuakeRenderer::ApplyNuakeImGuiTheme();
 
+
 	auto canvas = NuakeUI::Canvas();
 	canvas.SetInputManager(new MyInputManager(window));
 
@@ -33,6 +38,7 @@ void main()
 	root->InsertChild(NuakeUI::Node::New("Children 1"));
 	root->InsertChild(NuakeUI::Button::New("My Button", "Hello"));
 	root->InsertChild(NuakeUI::Checkbox::New("My Checkbox"));
+	root->InsertChild(NuakeUI::Text::New("myText", "My Checkbox"));
 
 	root->SetWidthPercent(100.f);
 	root->SetHeightPercent(100.f);
@@ -69,6 +75,10 @@ void main()
 	checkbox->SetBorderColor({ 0.15, 0.15, 0.15, 1.0f });
 	checkbox->Style.background_color = { 0.2, 0.2, 0.0, 1 };
 
+	auto myText = root->FindChildByID<NuakeUI::Text>("myText");
+	myText->SetBorder(4.f);
+	myText->SetBorderColor({ 1, 0, 0, 1 });
+
 	while (!window.ShouldClose())
 	{
 		NuakeRenderer::Clear();
@@ -86,13 +96,12 @@ void main()
 			button->Style.border = 16.f;
 			button->Style.background_color.r = 1.0f;
 		}
-			
 		else
 		{
 			button->Style.background_color.r = 0.f;
 			button->Style.border = 8.f;
 		}
-		
+
 		if (checkbox->Checked())
 		{
 			checkbox->Style.background_color = { 0.2, 0.8, 0.0, 1 };
@@ -101,10 +110,11 @@ void main()
 		{
 			checkbox->Style.background_color = { 0.8, 0.2, 0.0, 1 };
 		}
-
 		canvas.Draw();
-
+		NuakeUI::Renderer::Get().DrawString("Hello World", 32.0);
+		
 		NuakeRenderer::BeginImGuiFrame();
+
 
 		if (ImGui::Begin("Inspector"))
 		{

@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include "MyInputManager.h"
-#define GLFW_INCLUDE_NONE ;
-#include <NuakeRenderer/Window.h>
+﻿#include <NuakeRenderer/Window.h>
 #include <NuakeRenderer/NuakeRenderer.h>
 
 // UI components
@@ -11,43 +8,34 @@
 #include <NuakeUI/Text.h>
 
 #include <NuakeUI/Renderer.h>
+#include <NuakeUI/Inspector.h>
+#include <NuakeUI/CanvasParser.h>
 
-void DrawUI(std::shared_ptr<NuakeUI::Node> node)
-{
-	if (ImGui::TreeNode(node->GetID().c_str()))
-	{
-		for (auto& c : node->GetChildrens())
-			DrawUI(c);
+#include "MyInputManager.h"
 
-		ImGui::TreePop();
-	}
-}
-
+#include <stdio.h>
 void main()
 {
+	
 	auto window = NuakeRenderer::Window("Hello");
 	NuakeRenderer::ApplyNuakeImGuiTheme();
 
+	auto test = NuakeUI::CanvasParser::Get().Parse("../resources/UI/test.xml");
 
-	auto canvas = NuakeUI::Canvas();
-	canvas.SetInputManager(new MyInputManager(window));
+	auto canvas = NuakeUI::Canvas::New();
+	canvas->SetInputManager(new MyInputManager(window));
 
 	auto root = NuakeUI::Node::New("Root");
-	canvas.SetRootNode(root);
-
+	canvas->SetRootNode(test);
 	root->InsertChild(NuakeUI::Node::New("Children 1"));
 	root->InsertChild(NuakeUI::Button::New("My Button", "Hello"));
 	root->InsertChild(NuakeUI::Checkbox::New("My Checkbox"));
-	root->InsertChild(NuakeUI::Text::New("myText", "My Checkbox"));
+	root->InsertChild(NuakeUI::Text::New("myText", "Hello World :)"));
 
 	root->SetWidthPercent(100.f);
 	root->SetHeightPercent(100.f);
 	root->SetBorder(15.f);
 	root->SetBorderColor({ 1.15f, 0.15f, 0.15f, 1.f });
-	root->Style.background_color.r = 0.1f;
-	root->Style.background_color.g = 0.1f;
-	root->Style.background_color.b = 0.1f;
-	root->Style.background_color.a = 0.1f;
 	root->SetDisplay(YGDisplayFlex);
 	root->SetJustify(YGJustifyCenter);
 	root->SetAlignItem(YGAlignCenter);
@@ -78,14 +66,14 @@ void main()
 	auto myText = root->FindChildByID<NuakeUI::Text>("myText");
 	myText->SetBorder(4.f);
 	myText->SetBorderColor({ 1, 0, 0, 1 });
-
+	myText->FontStyle.Alignment = NuakeUI::TextAlign::Center;
 	while (!window.ShouldClose())
 	{
 		NuakeRenderer::Clear();
 		NuakeRenderer::PollEvents();
 
-		canvas.Calculate(window.GetWindowSize());
-		canvas.Tick();
+		canvas->Calculate(window.GetWindowSize());
+		canvas->Tick();
 		if (button->GetState() == NuakeUI::State::Hover)
 		{
 			button->Style.background_color.r = 0.5f;
@@ -110,19 +98,10 @@ void main()
 		{
 			checkbox->Style.background_color = { 0.8, 0.2, 0.0, 1 };
 		}
-		canvas.Draw();
-		NuakeUI::Renderer::Get().DrawString("Hello World", 32.0);
-		
-		NuakeRenderer::BeginImGuiFrame();
+		canvas->Draw();
 
+		NuakeUI::DrawInspector(canvas);
 
-		if (ImGui::Begin("Inspector"))
-		{
-			DrawUI(root);
-		}
-		ImGui::End();
-
-		NuakeRenderer::EndImGuiFrame();
 
 		window.SwapBuffers();
 	}

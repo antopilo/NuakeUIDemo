@@ -1,9 +1,8 @@
-<node id="box">
+<div id="box" class="main" stylesheet="test.css">
     <text id="welcome">NuakeUI</text>  
     <text id="MyText2">Hello World!</text>  
     <text id="MyText2">The quick brown fox jumps over the lazy dragon.</text> 
-    <node>
-        <text>I am in a box!</text> 
-        <text>Me TOO!</text> 
-    </node>
-</node>
+    <button id="main-btn">
+        <text>Click Me!</text>
+    </button>
+</div>

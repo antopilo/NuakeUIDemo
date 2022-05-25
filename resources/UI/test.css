@@ -1,0 +1,18 @@
+.main {
+    width: 100%;
+    height: 100%;
+    background-color: #c3fffacc;
+    max-width: 1000px;
+}
+
+#main-btn {
+    width: 500px;
+    height: 200px;
+    background-color: #00fc69fb;
+}
+
+#main-btn:hover {
+    width: 500px;
+    height: 200px;
+    background-color: #00fc69fb;
+}

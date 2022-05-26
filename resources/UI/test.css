@@ -1,18 +1,54 @@
 .main {
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
-    background-color: #c3fffacc;
-    max-width: 1000px;
+}
+
+.text-container {
+    width: 50%;
+    min-width: 1000px;
+    background-color: #FF000044;
+}
+
+.text {
+    text-align: center;
+}
+
+#welcome {
+    border-size: 3px;
+    border-color: #0000FF;
 }
 
 #main-btn {
-    width: 500px;
-    height: 200px;
-    background-color: #00fc69fb;
+    margin-top: 8px;
+    background-color: #00A2EEFF;
+    border-color:   #D4F1FFFF;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-size: 0px;
+    border-radius: 32px;
+    overflow: hidden;
+}
+
+.hidden {
+    width: 0px;
+    height: 0px;
 }
 
 #main-btn:hover {
-    width: 500px;
-    height: 200px;
-    background-color: #00fc69fb;
+    background-color: #00A2EEFF;
+    border-size: 4px;
+}
+
+#main-btn:active {
+    background-color: #0063FFFF;
+    border-size: 2px;
+}
+
+.btn-label {
+    width: 100%;
+    text-align: center;
 }

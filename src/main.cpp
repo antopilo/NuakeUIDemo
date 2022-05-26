@@ -17,7 +17,7 @@
 
 void main()
 {
-	auto window = NuakeRenderer::Window("NuakeUI Demo");
+	auto window = NuakeRenderer::Window("NuakeUI Demo", {1920, 1080});
 	NuakeRenderer::ApplyNuakeImGuiTheme();
 
 	// Load HTML file.
@@ -26,9 +26,18 @@ void main()
 
 	// Set button click callback.
 	auto btn = canvas->FindNodeByID<NuakeUI::Button>("main-btn");
-	btn->SetClickCallback([]() {
-		printf("I have been clicked! \n");
-	});
+	btn->UserData = 0;
+
+	auto btnCallback = [](NuakeUI::Button& button) 
+	{
+		int& myData = std::any_cast<int&>(button.UserData);
+		myData++;
+		button.Classes.push_back("hidden");
+		auto text = button.GetChild<NuakeUI::Text>(0);
+		text->SetText("Ive been clicked " + std::to_string(myData) + " times.");
+	};
+
+	btn->SetClickCallback(btnCallback);
 
 	while (!window.ShouldClose())
 	{

@@ -9,7 +9,6 @@ uniform sample vec2 u_TexturePos;
 uniform vec2 u_TextureScale;
 
 uniform vec4 u_FontColor;
-uniform vec4 u_BGColor;
 
 uniform float u_PxRange;
 
@@ -39,5 +38,5 @@ void main() {
     float signed_dist = median - 0.5;
     float d = fwidth(signed_dist);
     float opacity = smoothstep(-d, d, signed_dist);
-    FragColor = mix(u_BGColor, u_FontColor, opacity);
+    FragColor = mix(vec4(0), u_FontColor, opacity);
 }

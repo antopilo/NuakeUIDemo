@@ -17,27 +17,61 @@
 
 void main()
 {
-	auto window = NuakeRenderer::Window("NuakeUI Demo", {1920, 1080});
+	auto window = NuakeRenderer::Window("NuakeUI Demo", {800, 600});
 	NuakeRenderer::ApplyNuakeImGuiTheme();
 
 	// Load HTML file.
-	auto canvas = NuakeUI::CanvasParser::Get().Parse("../resources/UI/test.xml");
+	auto canvas = NuakeUI::CanvasParser::Get().Parse("../resources/UI/demo.html");
 	canvas->SetInputManager(new MyInputManager(window));
 
-	// Set button click callback.
-	auto btn = canvas->FindNodeByID<NuakeUI::Button>("main-btn");
-	btn->UserData = 0;
+	auto tab1Btn = canvas->FindNodeByID<NuakeUI::Button>("tab1-btn");
+	auto tab2Btn = canvas->FindNodeByID<NuakeUI::Button>("tab2-btn");
 
-	auto btnCallback = [](NuakeUI::Button& button) 
+	auto tab1 = canvas->FindNodeByID<NuakeUI::Node>("tab1");
+	auto tab2 = canvas->FindNodeByID<NuakeUI::Node>("tab2");
+
+	struct tabsData
 	{
-		int& myData = std::any_cast<int&>(button.UserData);
-		myData++;
-		button.Classes.push_back("hidden");
-		auto text = button.GetChild<NuakeUI::Text>(0);
-		text->SetText("Ive been clicked " + std::to_string(myData) + " times.");
+		std::vector<std::shared_ptr<NuakeUI::Node>> tabs;
+		int tabId;
 	};
 
-	btn->SetClickCallback(btnCallback);
+	tabsData data = {
+		{ tab1, tab2 },
+		0
+	};
+
+	data.tabId = 0;
+	tab1Btn->UserData = data;
+
+	data.tabId = 1;
+	tab2Btn->UserData = data;
+
+	auto& callback = [](NuakeUI::Button& btn) 
+	{
+		auto tab = std::any_cast<tabsData>(btn.UserData);
+		if (tab.tabs[tab.tabId]->HasClass("visible"))
+			return;
+
+		tab.tabs[tab.tabId]->RemoveClass("hidden");
+		tab.tabs[tab.tabId]->AddClass("visible");
+
+		int i = 0;
+		for (auto& t : tab.tabs)
+		{
+			if (i != tab.tabId)
+			{
+				t->RemoveClass("visible");
+				t->AddClass("hidden");
+			}
+			i++;
+		}
+	};
+
+	// TODO: Has class check.
+
+	tab1Btn->SetClickCallback(callback);
+	tab2Btn->SetClickCallback(callback);
 
 	while (!window.ShouldClose())
 	{

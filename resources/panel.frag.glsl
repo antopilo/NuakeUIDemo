@@ -11,29 +11,29 @@ uniform float u_BorderRadius;
 
 float ShouldDiscard(vec2 coords, float border, vec2 dimensions, float radius)
 {
-    vec2 circle_center = vec2(radius + border, radius + border);
+    vec2 circle_center = vec2(radius + border, radius + border) - vec2(0.5, 0.5);
     float dst = length(coords - circle_center);
     float delta = fwidth(dst);
     if (coords.x < circle_center.x && coords.y < circle_center.y) 
-        return 1.0 - smoothstep(radius - delta, radius, dst); //first circle
+        return 1.0 - smoothstep(radius - delta, radius, dst);
 
-    circle_center.x += dimensions.x - 2 * (radius + border) ;
+    circle_center.x += dimensions.x - 2 * (radius + border) + 1;
     dst = length(coords - circle_center);
     delta = fwidth(dst);
     if (coords.x > circle_center.x && coords.y < circle_center.y) 
-        return 1.0 - smoothstep(radius - delta, radius, dst); //first circle
+        return 1.0 - smoothstep(radius - delta, radius, dst);
 
-    circle_center.y += dimensions.y - 2 * (radius + border);
+    circle_center.y += dimensions.y - 2 * (radius + border) + 1;
     dst = length(coords - circle_center);
     delta = fwidth(dst);
     if (coords.x > circle_center.x && coords.y > circle_center.y) 
-        return 1.0 - smoothstep(radius - delta, radius, dst); //first circle
+        return 1.0 - smoothstep(radius - delta, radius, dst); 
 
-    circle_center.x -= dimensions.x - 2 * (radius + border);
+    circle_center.x -= dimensions.x - 2 * (radius + border) + 1;
     dst = length(coords - circle_center);
     delta = fwidth(dst);
     if (coords.x < circle_center.x && coords.y > circle_center.y) 
-        return 1.0 - smoothstep(radius - delta, radius, dst); //first circle
+        return 1.0 - smoothstep(radius - delta, radius, dst);
 
     return 1.f;
 

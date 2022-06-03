@@ -17,19 +17,19 @@ float ShouldDiscard(vec2 coords, float border, vec2 dimensions, float radius)
     if (coords.x < circle_center.x && coords.y < circle_center.y) 
         return 1.0 - smoothstep(radius - delta, radius, dst);
 
-    circle_center.x += dimensions.x - 2 * (radius + border) + 1;
+    circle_center.x += dimensions.x - 2 * (radius + border) + 1.f;
     dst = length(coords - circle_center);
     delta = fwidth(dst);
     if (coords.x > circle_center.x && coords.y < circle_center.y) 
         return 1.0 - smoothstep(radius - delta, radius, dst);
 
-    circle_center.y += dimensions.y - 2 * (radius + border) + 1;
+    circle_center.y += dimensions.y - 2 * (radius + border) + 1.f;
     dst = length(coords - circle_center);
     delta = fwidth(dst);
     if (coords.x > circle_center.x && coords.y > circle_center.y) 
         return 1.0 - smoothstep(radius - delta, radius, dst); 
 
-    circle_center.x -= dimensions.x - 2 * (radius + border) + 1;
+    circle_center.x -= dimensions.x - 2 * (radius + border) + 1.f;
     dst = length(coords - circle_center);
     delta = fwidth(dst);
     if (coords.x < circle_center.x && coords.y > circle_center.y) 

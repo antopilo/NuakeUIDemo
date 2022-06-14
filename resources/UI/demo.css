@@ -1,0 +1,116 @@
+.root {
+    width:100%;
+    height: 100%;
+    flex-direction: row;
+    background-color: #181818FF;
+}
+
+.nuakeUIText {
+    font-size: 72px;
+}
+
+.left-container {
+    width: 300px;
+    min-width: 300px;
+    background-color: #141414FF;
+    height: 100%;
+    flex-direction: column;
+    padding-right: 22px;
+    padding-top: 16px;
+    padding-left: 22px;
+    padding-bottom: 32px;
+    overflow: scroll;
+}
+
+.tab {
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: scroll;
+}
+
+.right-container {
+    width: 100%;
+    height: 100%;
+    background-color: #181818;
+}
+
+.round {
+    background-color: #ff1c1cFF;
+    width: 100px;
+    height: 1000px;
+    border-radius: 16px;
+}
+
+.bigText {
+    font-size: 100px;
+}
+
+button {
+    background-color: #00000000;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.container {
+    background-color: #FF0000;
+    width: 100%;
+    flex-direction: row;
+    overflow: scroll;
+}
+
+button:hover {
+    background-color: #222222;
+}
+
+button:active {
+    background-color: #ff00d4;
+}
+
+.btn-activated {
+    background-color: #ff00d4;
+}
+
+
+.btn-lbl {
+    text-align: left;
+    font-size: 32px;
+}
+
+.visible {
+    height: 100%;
+    width: 100%;
+    visibility: visible;
+}
+
+.hidden {
+    height: 0px;
+    width: 0px;
+    visibility: hidden;
+}
+
+.right-container {
+    padding-left: 8px;
+    padding-top: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+
+    max-width: 50%;
+}
+
+.title {
+    font-size: 72px;
+    height: 0px;
+    width: 0px;
+}
+
+.tab {
+    flex-direction: column;
+    width:100%;
+    margin-right: 8px;
+}

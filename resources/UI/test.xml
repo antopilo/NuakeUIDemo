@@ -1,11 +1,14 @@
-<div id="box" class="main" stylesheet="test.css">
-    <div class="text-container">
-        <text class="text" id="welcome">NuakeUI</text>  
-        <text class="text" id="MyText2">Hello World!</text>  
-        <text class="text" id="MyText2">The quick brown fox jumps over the lazy dragon.</text> 
-    </div>
+<div class="main" stylesheet="test.css">
 
-    <button id="main-btn">
-        <text class="btn-label">Click Me!</text>
+    <!--    <div class="text-container">
+        <text id="welcome">NuakeUI</text>  
+        <text id="MyText2">Hello World!</text>  
+        <text id="MyText2">The quick brown fox jumps over the lazy dragon.</text> 
+    </div>
+-->
+    <div class="block">
+
+    </div>
+    <button id="main-btn">Hello World
     </button>
 </div>

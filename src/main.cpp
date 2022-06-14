@@ -74,6 +74,16 @@ void main()
 	{
 		NuakeRenderer::Begin();
 
+		// Reload html file.
+		if (glfwGetKey(window.GetHandle(), GLFW_KEY_0))
+		{
+			canvas = NuakeUI::CanvasParser::Get().Parse(filePath);
+			canvas->SetInputManager(inputManager);
+		}
+
+		if (glfwGetKey(window.GetHandle(), GLFW_KEY_1))
+			NuakeUI::Renderer::Get().ReloadShaders();
+
 		if (glfwGetKey(window.GetHandle(), GLFW_KEY_F5))
 		{
 			canvas = LoadCanvas();

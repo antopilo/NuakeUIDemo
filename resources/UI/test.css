@@ -6,13 +6,17 @@
 }
 
 .text-container {
-    width: 50%;
+    width: 25%;
     min-width: 1000px;
-    background-color: #FF000044;
 }
 
-.text {
-    text-align: center;
+.block {
+    width: 200px;
+    height: 200px;
+    background-color: #00ee28;
+    border-color: #0000FF;
+    border-radius: 16px;
+    border-size: 8px;
 }
 
 #welcome {
@@ -22,15 +26,14 @@
 
 #main-btn {
     margin-top: 8px;
-    background-color: #00A2EEFF;
+    background-color: #00ee28;
     border-color:   #D4F1FFFF;
     padding-left: 16px;
     padding-right: 16px;
     padding-top: 16px;
     padding-bottom: 16px;
-    border-size: 0px;
+    border-size: 2px;
     border-radius: 32px;
-    overflow: hidden;
 }
 
 .hidden {

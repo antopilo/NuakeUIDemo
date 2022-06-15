@@ -1,8 +1,14 @@
 <div class="root" stylesheet="demo.css">
     <div id="btn-container" class="left-container">
-        <button> <text class="btn-lbl">Welcome</text> </button>
-        <button> <text class="btn-lbl">Flexbox</text> </button>
-        <button> <text class="btn-lbl">Text</text> </button>
+        <button modelClass="[btn-activated]: tab == 0"> 
+            <text class="btn-lbl">Welcome</text> 
+        </button>
+        <button modelClass="[btn-activated]: tab == 1"> 
+            <text class="btn-lbl">Flexbox</text> 
+        </button>
+        <button modelClass="[btn-activated]: tab == 2"> 
+            <text class="btn-lbl">Text</text> 
+        </button>
     </div>
     <div class="right-container">
         <div id="tab1" if="tab == 0" class="tab tab1 visible">

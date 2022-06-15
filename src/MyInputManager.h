@@ -26,14 +26,14 @@ public:
 	{
 		double xpos, ypos;
 		glfwGetCursorPos(mWindow, &xpos, &ypos);
-		return xpos;
+		return (float)xpos;
 	}
 
 	float GetMouseY() override
 	{
 		double xpos, ypos;
 		glfwGetCursorPos(mWindow, &xpos, &ypos);
-		return ypos;
+		return (float)ypos;
 	}
 
 	float GetScrollX() override
@@ -48,8 +48,8 @@ public:
 
 	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	{
-		ScrollX = xoffset;
-		ScrollY = yoffset;
+		ScrollX = (float)xoffset;
+		ScrollY = (float)yoffset;
 	}
 
 private:

@@ -21,12 +21,15 @@ public:
 	{
 		using namespace NuakeUI;
 		// Load HTML file.
-		auto canvas = CanvasParser::Get().Parse("../resources/UI/demo.html");
+		
+		auto parser = CanvasParser();
+		auto canvas = parser.Parse("../resources/UI/demo.html");
 		
 		// Creating data model and binding it to a node.
 		auto dataModel = DataModel::New("myDataModel");
 		dataModel->Bind("tab", &TabDataModel.tabSelected);
-		canvas->GetRootNode()->SetDataModel(dataModel);
+		
+		canvas->GetRoot()->SetDataModel(dataModel);
 
 		ButtonPtr btnContainer;
 		if (canvas->FindNodeByID<Button>("btn-container", btnContainer))
@@ -66,7 +69,8 @@ public:
 			// Reload html file.
 			if (glfwGetKey(window.GetHandle(), GLFW_KEY_0))
 			{
-				canvas = CanvasParser::Get().Parse("../resources/UI/demo.html");
+				auto parser = CanvasParser();
+				canvas = parser.Parse("../resources/UI/demo.html");
 				canvas->SetInputManager(inputManager);
 			}
 
@@ -79,7 +83,7 @@ public:
 				canvas->SetInputManager(inputManager);
 			}
 
-			canvas->Calculate(window.GetWindowSize());
+			canvas->ComputeLayout(window.GetWindowSize());
 			canvas->Tick();
 			canvas->Draw();
 

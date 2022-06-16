@@ -46,6 +46,11 @@
     border-size: 4px;
 }
 
+.activated {
+    background-color: #0063FFFF;
+    border-size: 2px;
+}
+
 #main-btn:active {
     background-color: #0063FFFF;
     border-size: 2px;

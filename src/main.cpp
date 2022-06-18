@@ -2,6 +2,8 @@
 #include <NuakeUI/NuakeUI.h>
 
 #include "MyInputManager.h"
+#include "SliderNode.h"
+#include <NuakeUI/Inspector.h>
 
 class myDataModel
 {
@@ -20,9 +22,11 @@ public:
 	auto LoadCanvas()
 	{
 		using namespace NuakeUI;
+
 		// Load HTML file.
-		
 		auto parser = CanvasParser();
+		parser.RegisterNodeType("slider", SliderNode::New);
+
 		auto canvas = parser.Parse("../resources/UI/demo.html");
 		
 		// Creating data model and binding it to a node.
@@ -87,7 +91,7 @@ public:
 			canvas->Tick();
 			canvas->Draw();
 
-			//NuakeUI::DrawInspector(canvas);
+			NuakeUI::DrawInspector(canvas);
 
 			window.SwapBuffers();
 		}

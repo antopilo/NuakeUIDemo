@@ -37,10 +37,20 @@
 }
 
 .round {
-    background-color: #ff1c1cFF;
-    width: 100px;
-    height: 1000px;
-    border-radius: 16px;
+    background-color: #111111ff;
+    border-radius: 4px;
+    padding-left: 12px;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+	width: 100%;
+	margin-bottom: 8px;
+}
+
+
+
+.split-buttons {
+    flex-direction: row;
 }
 
 .bigText {
@@ -57,6 +67,8 @@ button {
     padding-bottom: 4px;
 }
 
+
+
 .container {
     background-color: #FF0000;
     width: 100%;
@@ -65,11 +77,11 @@ button {
 }
 
 button:hover {
-    background-color: #222222;
+    background-color: #222222FF;
 }
 
 button:active {
-    background-color: #ff00d4;
+    background-color: #ff00d4FF;
 }
 
 .btn-activated {
@@ -107,10 +119,26 @@ button:active {
     font-size: 72px;
     height: 0px;
     width: 0px;
+	margin-bottom: 8px;
 }
 
 .tab {
     flex-direction: column;
     width:100%;
     margin-right: 8px;
+}
+
+.section-title {
+	 margin-bottom: 8px;
+}
+
+.btn-primary {
+    background-color: #44CC44FF;
+}
+
+.btn-secondary {
+	border-color: #555555FF;
+	background-color: #00000022;
+	border-size: 2px;
+	margin-left: 8px;
 }

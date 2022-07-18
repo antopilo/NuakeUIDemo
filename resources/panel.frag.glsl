@@ -8,6 +8,8 @@ uniform vec4 u_Color;
 uniform vec4 u_BorderColor;
 uniform float u_Border;
 uniform float u_BorderRadius;
+uniform sampler2D u_BackgroundImage;
+uniform float u_HasBackgroundImage;
 
 float ShouldDiscard(vec2 coords, float border, vec2 dimensions, float radius)
 {
@@ -44,8 +46,15 @@ void main() {
 	vec2 center = u_Size / 2.0;
 	vec4 finalColor = u_Color;
 
-    // Border rounding
-    float a = finalColor.a;
+    vec4 textureColor = texture(u_BackgroundImage, v_UV);
+	finalColor.rgb = mix(finalColor, textureColor, u_HasBackgroundImage).rgb;
+
+	if (u_HasBackgroundImage == 1.0)
+	{
+		finalColor.a = u_Color.a;
+	}
+
+    float a = 1.0f;
     if(u_BorderRadius >= 0.f)
     {
         a = min(ShouldDiscard(coords, 0, u_Size, u_BorderRadius + 2), finalColor.a);
@@ -59,14 +68,20 @@ void main() {
         if(u_BorderRadius > 0.f)
             borderAlpha = ShouldDiscard(coords, u_Border, u_Size, u_BorderRadius);
 
-        if(a == 1.f)
+		if(a == 1.f)
         { 
-            finalColor = mix(u_BorderColor, u_Color, borderAlpha);
+			finalColor = mix(u_BorderColor, finalColor, borderAlpha);
             if(coords.x < u_Border || coords.x > u_Size.x - u_Border ||
                 coords.y < u_Border || coords.y > u_Size.y - u_Border)
             {
                  finalColor = u_BorderColor;
+				
             }
+			else
+			{
+				finalColor.a = mix(borderAlpha, textureColor.a, u_HasBackgroundImage);
+			}
+			
             FragColor = finalColor; 
             return;
         }

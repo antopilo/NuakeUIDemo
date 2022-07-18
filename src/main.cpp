@@ -4,6 +4,9 @@
 #include "MyInputManager.h"
 #include "SliderNode.h"
 #include <NuakeUI/Inspector.h>
+#include "TextInput.h"
+
+#include <NuakeUI/FontManager.h>
 
 class myDataModel
 {
@@ -26,9 +29,14 @@ public:
 		// Load HTML file.
 		auto parser = CanvasParser();
 		parser.RegisterNodeType("slider", SliderNode::New);
+		parser.RegisterNodeType("textInput", TextInput::New);
 
 		auto canvas = parser.Parse("../resources/UI/demo.html");
 		
+		NodePtr viewport;
+		canvas->FindNodeByID<Node>("viewport", viewport);
+		viewport->ComputedStyle.BackgroundImage = FontManager::Get().GetFont("../resources/fonts/SourceSansPro-Regular.ttf")->mAtlas;
+
 		// Creating data model and binding it to a node.
 		auto dataModel = DataModel::New("myDataModel");
 		dataModel->Bind("tab", &TabDataModel.tabSelected);

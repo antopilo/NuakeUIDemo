@@ -9,6 +9,15 @@
     font-size: 72px;
 }
 
+#viewport {
+    background-color: #00FF00FF;
+    width: 300px;
+    height: 300px;
+	border-radius: 16px;
+	border-color: #FF0000;
+	border-size: 4px;
+}
+
 .left-container {
     width: 300px;
     min-width: 300px;
@@ -138,7 +147,7 @@ button:active {
 
 .btn-secondary {
 	border-color: #555555FF;
-	background-color: #00000022;
+	background-color: #000000FF;
 	border-size: 2px;
 	margin-left: 8px;
 }

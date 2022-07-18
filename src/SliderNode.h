@@ -72,7 +72,7 @@ public:
 		Drag
 	};
 
-	SliderType Type = SliderType::Drag;
+	SliderType Type = SliderType::Normal;
 
 	float MaxValue;
 	float MinValue;
@@ -97,7 +97,6 @@ public:
 		this->ComputedStyle.BorderRadius = 4.f;
 
 		std::map<StyleProperties, PropValue> styles;
-		styles[StyleProperties::Height] = PropValue(PropValueType::Pixel, 30.0f);
 		styles[StyleProperties::FlexDirection] = (int)FlexDirectionType::Row;
 		styles[StyleProperties::AlignItems] = (int)AlignItemsType::Center;
 		ApplyStyleProperties(styles);
@@ -130,15 +129,18 @@ public:
 			float mouseX = inputManager->GetMouseX();
 			if (Dragging)
 			{
-				Value -= (PosStart.x - mouseX) * StepSize;
+				float delta = (PosStart.x - mouseX) * StepSize;
+				Value -= delta;
 				PosStart.x = mouseX;
+				//std::cout << "State: " << (int)State << std::endl;
 			}
 		}
 		else
 		{
 			Value = MinValue + (Handle->Delta * (MaxValue - MinValue));
 		}
-		std::cout << "Value: " << Value << std::endl;
+
+		//std::cout << "Value: " << Value  << " Dragging: " << Dragging << std::endl;
 	}
 
 	void OnClick(Vector2 mousePosition) override
@@ -149,6 +151,8 @@ public:
 		Dragging = true;
 
 		PosStart = mousePosition;
+
+		std::cout << "OnClick " << "State: " << (int)State << std::endl;
 	}
 
 	void OnClickReleased(Vector2 mousePosition) override
@@ -156,6 +160,8 @@ public:
 		if (Type != SliderType::Drag)
 			Handle->OnClickReleased(mousePosition);
 		Dragging = false;
+
+		std::cout << "OnClickReleased" << std::endl;
 	}
 private:
 

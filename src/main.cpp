@@ -78,16 +78,10 @@ public:
 		{
 			Begin();
 
-			// Reload html file.
-			if (glfwGetKey(window.GetHandle(), GLFW_KEY_0))
-			{
-				auto parser = CanvasParser();
-				canvas = parser.Parse("../resources/UI/demo.html");
-				canvas->SetInputManager(inputManager);
-			}
-
 			if (glfwGetKey(window.GetHandle(), GLFW_KEY_1))
+			{
 				Renderer::Get().ReloadShaders();
+			}
 
 			if (glfwGetKey(window.GetHandle(), GLFW_KEY_F5))
 			{

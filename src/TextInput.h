@@ -11,6 +11,7 @@ class TextInput : public Node
 private:
 	std::string Buffer = "TextInput";
 	TextPtr TextLabel;
+	uint32_t _cursorIdx = 0;
 
 public:
 	static std::shared_ptr<TextInput> New(const std::string& id, const std::string& name)
@@ -31,10 +32,11 @@ public:
 
 		ComputedStyle.BorderRadius = 4.0f;
 		ComputedStyle.BorderSize = 2.0f;
-		styles[StyleProperties::PaddingLeft] = PropValue(PropValueType::Pixel, 8.f);;
-		styles[StyleProperties::PaddingTop] = PropValue(PropValueType::Pixel, 4.f);;
-		styles[StyleProperties::PaddingBottom] = PropValue(PropValueType::Pixel, 4.f);;
-		styles[StyleProperties::PaddingRight] = PropValue(PropValueType::Pixel, 8.f);;
+		ComputedStyle.MaxWidth = { 200.f, LengthType::Pixel };
+		styles[StyleProperties::PaddingLeft] = PropValue(PropValueType::Pixel, 8.f);
+		styles[StyleProperties::PaddingTop] = PropValue(PropValueType::Pixel, 4.f);
+		styles[StyleProperties::PaddingBottom] = PropValue(PropValueType::Pixel, 4.f);
+		styles[StyleProperties::PaddingRight] = PropValue(PropValueType::Pixel, 8.f);
 		ApplyStyleProperties(styles);
 
 		TextLabel = Text::New("textInput", "Hello");
@@ -67,11 +69,19 @@ public:
 			ComputedStyle.BorderSize = 2.0f;
 		}
 		else
+		{
 			ComputedStyle.BorderSize = 0.f;
+		}
 	}
 
-	virtual void OnClick(Vector2 mousePosition) override
+	virtual void OnClick(InputManager* inputManager) override
 	{
-		
+		if (!this->HasFocus())
+		{
+			while (inputManager->InputStack.size() > 0)
+			{
+				inputManager->ConsumeStack();
+			}
+		}
 	}
 };

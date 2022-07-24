@@ -49,12 +49,12 @@ public:
 		}
 	}
 
-	void OnClick(Vector2 position) override
+	void OnClick(InputManager* inputManager) override
 	{
 		isHandleGrabbed = true;
 	}
 
-	void OnClickReleased(Vector2 mousePosition) override
+	void OnClickReleased(InputManager* inputManager) override
 	{
 		isHandleGrabbed = false;
 	}
@@ -143,22 +143,23 @@ public:
 		//std::cout << "Value: " << Value  << " Dragging: " << Dragging << std::endl;
 	}
 
-	void OnClick(Vector2 mousePosition) override
+	void OnClick(InputManager* inputManager) override
 	{
 		if(Type !=  SliderType::Drag)
-			Handle->OnClick(mousePosition);
+			Handle->OnClick(inputManager);
 
 		Dragging = true;
 
-		PosStart = mousePosition;
+		PosStart = Vector2(inputManager->GetMouseX(), inputManager->GetMouseY());
 
 		std::cout << "OnClick " << "State: " << (int)State << std::endl;
 	}
 
-	void OnClickReleased(Vector2 mousePosition) override
+	void OnClickReleased(InputManager* inputManager) override
 	{
 		if (Type != SliderType::Drag)
-			Handle->OnClickReleased(mousePosition);
+			Handle->OnClickReleased(inputManager);
+
 		Dragging = false;
 
 		std::cout << "OnClickReleased" << std::endl;

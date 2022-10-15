@@ -1,10 +1,13 @@
 #pragma once
-#include <NuakeUI/Node.h>
+#include <NuakeUI/Nodes/Node.h>
+
 #include <iostream>
+
 using namespace NuakeUI;
 
 class SliderHandle;
 typedef std::shared_ptr<SliderHandle> SliderHandlePtr;
+
 class SliderHandle : public NuakeUI::Node
 {
 private:

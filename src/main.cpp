@@ -6,7 +6,8 @@
 #include <NuakeUI/Inspector.h>
 #include "TextInput.h"
 
-#include <NuakeUI/FontManager.h>
+#include <NuakeUI/Font/FontManager.h>
+
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
@@ -38,7 +39,6 @@ public:
 		int width;
 		int height;
 		int channel;
-
 		unsigned char* m_LocalBuffer;
 		stbi_set_flip_vertically_on_load(1);
 		m_LocalBuffer = stbi_load("../resources/icons/icon.png", &width, &height, &channel, 4);
@@ -49,6 +49,7 @@ public:
 		{
 			logo->ComputedStyle.BackgroundImage = texture;
 		}
+
 		stbi_image_free(m_LocalBuffer);
 		stbi_set_flip_vertically_on_load(1);
 		m_LocalBuffer = stbi_load("../resources/icons/arrow.png", &width, &height, &channel, 4);
@@ -60,6 +61,7 @@ public:
 			arrow->ComputedStyle.BackgroundImage = texture2;
 		}
 		stbi_image_free(m_LocalBuffer);
+
 		// Creating data model and binding it to a node.
 		auto dataModel = DataModel::New("myDataModel");
 		dataModel->Bind("tab", &TabDataModel.tabSelected);

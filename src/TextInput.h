@@ -1,6 +1,6 @@
 #pragma once
-#include <NuakeUI/Node.h>
-#include <NuakeUI/Text.h>
+#include <NuakeUI/Nodes/Node.h>
+#include <NuakeUI/Nodes/Text.h>
 
 #include <memory>
 

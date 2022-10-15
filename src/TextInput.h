@@ -33,6 +33,7 @@ public:
 		ComputedStyle.BorderRadius = 4.0f;
 		ComputedStyle.BorderSize = 2.0f;
 		ComputedStyle.MaxWidth = { 200.f, LengthType::Pixel };
+		ComputedStyle.Overflow = OverflowType::Hidden;
 		styles[StyleProperties::PaddingLeft] = PropValue(PropValueType::Pixel, 8.f);
 		styles[StyleProperties::PaddingTop] = PropValue(PropValueType::Pixel, 4.f);
 		styles[StyleProperties::PaddingBottom] = PropValue(PropValueType::Pixel, 4.f);

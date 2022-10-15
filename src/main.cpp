@@ -7,6 +7,8 @@
 #include "TextInput.h"
 
 #include <NuakeUI/FontManager.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 class myDataModel
 {
@@ -33,14 +35,34 @@ public:
 
 		auto canvas = parser.Parse("../resources/UI/demo.html");
 		
-		NodePtr viewport;
-		canvas->FindNodeByID<Node>("viewport", viewport);
-		viewport->ComputedStyle.BackgroundImage = FontManager::Get().GetFont("../resources/fonts/SourceSansPro-Regular.ttf")->mAtlas;
+		int width;
+		int height;
+		int channel;
 
+		unsigned char* m_LocalBuffer;
+		stbi_set_flip_vertically_on_load(1);
+		m_LocalBuffer = stbi_load("../resources/icons/icon.png", &width, &height, &channel, 4);
+		
+		auto texture = std::make_shared<NuakeRenderer::Texture>(NuakeRenderer::TextureFlags{}, Vector2(width, height), m_LocalBuffer);
+		
+		if (NodePtr logo; canvas->FindNodeByID<Node>("logo", logo))
+		{
+			logo->ComputedStyle.BackgroundImage = texture;
+		}
+		stbi_image_free(m_LocalBuffer);
+		stbi_set_flip_vertically_on_load(1);
+		m_LocalBuffer = stbi_load("../resources/icons/arrow.png", &width, &height, &channel, 4);
+
+		auto texture2 = std::make_shared<NuakeRenderer::Texture>(NuakeRenderer::TextureFlags{}, Vector2(width, height), m_LocalBuffer);
+
+		if (NodePtr arrow; canvas->FindNodeByID<Node>("arrow", arrow))
+		{
+			arrow->ComputedStyle.BackgroundImage = texture2;
+		}
+		stbi_image_free(m_LocalBuffer);
 		// Creating data model and binding it to a node.
 		auto dataModel = DataModel::New("myDataModel");
 		dataModel->Bind("tab", &TabDataModel.tabSelected);
-		
 		canvas->GetRoot()->SetDataModel(dataModel);
 
 		ButtonPtr btnContainer;
@@ -51,11 +73,11 @@ public:
 				TabDataModel.tabSelected = btn.GetIndex();
 			};
 		
-			for (uint32_t i = 0; i < btnContainer->GetChildrens().size(); i++)
-			{
-				ButtonPtr button = btnContainer->GetChild<Button>(i);
-				button->SetClickCallback((callback));
-			}
+			//for (uint32_t i = 0; i < btnContainer->GetChildrens().size(); i++)
+			//{
+			//	ButtonPtr button = btnContainer->GetChild<Button>(i);
+			//	button->SetClickCallback((callback));
+			//}
 		}
 
 		return canvas;
@@ -66,7 +88,12 @@ public:
 		using namespace NuakeRenderer;
 		using namespace NuakeUI;
 		
+
+
 		auto window = Window("NuakeUI Demo", { 1280, 720 });
+		glEnable(GL_MULTISAMPLE);
+		glfwWindowHint(GLFW_SAMPLES, 8);
+
 		ApplyNuakeImGuiTheme();
 
 		auto inputManager = new MyInputManager(window);
@@ -102,5 +129,5 @@ public:
 
 void main()
 {
-	auto m = Main();
+	Main m = Main();
 }

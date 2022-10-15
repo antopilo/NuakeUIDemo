@@ -51,12 +51,12 @@ void main() {
 
 	if (u_HasBackgroundImage == 1.0)
 	{
-		finalColor.a = u_Color.a;
+		finalColor.a = textureColor.a;
 	}
 
     float a = 1.0f;
     if(u_BorderRadius >= 0.f)
-    {
+    {        
         a = min(ShouldDiscard(coords, 0, u_Size, u_BorderRadius + 2), finalColor.a);
         if(a == 0.f) 
             discard;
@@ -80,7 +80,8 @@ void main() {
 			else
 			{
 				finalColor.a = mix(borderAlpha, textureColor.a, u_HasBackgroundImage);
-			}
+                
+            }
 			
             FragColor = finalColor; 
             return;
@@ -88,7 +89,7 @@ void main() {
         else
         {
             finalColor = u_BorderColor;
-            finalColor.a = min(a, u_BorderColor.a);
+            finalColor.a = max(a, u_BorderColor.a);
             FragColor = finalColor;
             return;
         }

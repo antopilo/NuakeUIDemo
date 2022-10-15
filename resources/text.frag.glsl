@@ -35,12 +35,12 @@ vec3 sdf_triplet_alpha( vec3 sdf, float horz_scale, float vert_scale, float vgra
 void main() {
     vec2 textSize = textureSize(u_Atlas, 0);
 
-    vec2 uv = vec2(mix(u_TexturePos.x / textSize.x, u_TextureScale.x / textSize.x, v_UV.x),
-                   mix(u_TextureScale.y / textSize.y, u_TexturePos.y / textSize.y, 1.0 - v_UV.y));
+    vec2 uv = vec2(mix(int(u_TexturePos.x) / textSize.x, u_TextureScale.x / textSize.x, v_UV.x),
+                   mix(int(u_TextureScale.y) / textSize.y, u_TexturePos.y / textSize.y, 1.0 - v_UV.y));
 
     vec2 unitRange = 1.0 / textSize;
 
-    vec4 msd = texture(u_Atlas, uv).rgba;
+    vec4 msd = texture(u_Atlas, uv + vec2( unitRange.x, 0.0 )).rgba;
     float sdf_north = texture( u_Atlas, uv + vec2( 0.0, unitRange.y ) ).r;
     float sdf_east  = texture( u_Atlas, uv + vec2( unitRange.x, 0.0 ) ).r;
 
@@ -74,8 +74,7 @@ void main() {
 
     // For BGR subpixels:
     // triplet_alpha = triplet.bgr
-    FragColor = vec4( u_FontColor.rgb * triplet_alpha * 2.0, opacity);
-
     //FragColor = mix(vec4(0), u_FontColor, opacity);
+    FragColor = vec4( u_FontColor.rgb , opacity);
 
 }

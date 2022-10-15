@@ -1,0 +1,54 @@
+.left-container {
+    border-size: 1px;
+    border-color: #222222FF;
+    background-color: #FF0000FF;
+    width: 100%;
+    height: 100%;
+}
+
+#project-name {
+    font-size: 28px;
+    height: 30px;
+}
+
+.project-name-div {
+    height: 30px;
+    justify-content: center;
+    
+    background-color: #22222200;
+    padding-left: 16px;
+}
+
+.project-name-div:hover{
+    background-color: #222222FF;
+}
+
+.project-name-div:active {
+    background-color: #194176FF;
+}
+
+.btn-lbl {
+    font-size: 28px;
+    margin-left: 8px;
+}
+
+.btn {
+    height: 22px;
+    padding-left: 16px;
+    background-color: #22222200;
+    flex-direction: row;
+    align-items: center;
+}
+
+.btn:hover {
+    background-color: #222222FF;
+}
+
+.btn:active {
+    background-color: #194176FF;
+}
+
+#arrow {
+    width: 5px;
+    height: 12px;
+}

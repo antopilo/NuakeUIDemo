@@ -1,46 +1,12 @@
 <div class="root" stylesheet="demo.css">
-    <div id="btn-container" class="left-container">
-        <button modelClass="[btn-activated]: tab == 0"> 
-            <text class="btn-lbl">Welcome</text> 
-        </button>
-        <button modelClass="[btn-activated]: tab == 1"> 
-            <text class="btn-lbl">Flexbox</text> 
-        </button>
-        <button modelClass="[btn-activated]: tab == 2"> 
-            <text class="btn-lbl">Text</text> 
-        </button>
-    </div>
-    <div class="right-container">
-        <div id="tab1" if="tab == 0" class="tab tab1 visible">
-            <text class="title">NuakeUI Preview</text>
-            <div class="round">
-                <text class="section-title">Buttons</text>
-                <div class="split-buttons">
-                    <button class="btn-primary">Primary</button>
-                    <button class="btn-secondary">Secondary!</button>
-                </div>
-            </div>
-			<div class="round">
-                <text class="section-title">Sliders</text>
-                <slider/>
-            </div>
-            
-			<textInput/>
-            
-            <div id="viewport">
+    <fragment src="../resources/UI/menu-bar.html"></fragment>
 
-            </div>
-
-        </div>
-        <div id="tab2" if="tab == 1" class="tab tab2 hidden">
-            
-        </div>
-        <div id="tab3" if="tab == 2"  class="tab hidden">
-            <div class="container">
-                <text id="bigText">THIS IS SOME BIG TEXT</text>
-                <text>This is some regular texts.
-                </text>
-            </div>
+    <div class="main">
+        <fragment src="../resources/UI/btn-container.html"></fragment>
+        <div class="right-container">
+            <fragment src="../resources/UI/tabs/tab1.html"></fragment>
+            <fragment src="../resources/UI/tabs/tab2.html"></fragment>
+            <fragment src="../resources/UI/tabs/tab3.html"></fragment>
         </div>
     </div>
 </div>

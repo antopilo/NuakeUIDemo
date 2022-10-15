@@ -1,7 +1,19 @@
-.root {
-    width:100%;
+@import "../resources/UI/menu-bar.css";
+@import "../resources/UI/btn-container.css";
+
+.left-container {
+    background-color: #141414FF;
     height: 100%;
-    flex-direction: row;
+    flex-direction: column;
+    padding-bottom: 32px;
+    overflow: scroll;
+    width: 300px;
+}
+/*
+.root {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
     background-color: #181818FF;
 }
 
@@ -9,34 +21,30 @@
     font-size: 72px;
 }
 
-#viewport {
-    background-color: #00FF00FF;
-    width: 300px;
-    height: 300px;
-	border-radius: 16px;
-	border-color: #FF0000;
-	border-size: 4px;
+.main {
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
 }
 
-.left-container {
-    width: 300px;
-    min-width: 300px;
-    background-color: #141414FF;
-    height: 100%;
-    flex-direction: column;
-    padding-right: 22px;
-    padding-top: 16px;
-    padding-left: 22px;
-    padding-bottom: 32px;
-    overflow: scroll;
+
+
+
+
+.welcome-wrapper{
+    width:100%;
+    height:100%;
+    justify-content: flex-start;
+    align-items: center;
 }
+
+
 
 .tab {
     width: 100%;
     height: 100%;
     justify-content: flex-start;
     align-items: flex-start;
-    overflow: scroll;
 }
 
 .right-container {
@@ -56,8 +64,6 @@
 	margin-bottom: 8px;
 }
 
-
-
 .split-buttons {
     flex-direction: row;
 }
@@ -68,15 +74,20 @@
 
 button {
     background-color: #00000000;
-    border-radius: 8px;
+    height: 40px;
     margin-bottom: 4px;
     padding-left: 12px;
     padding-right: 12px;
     padding-top: 4px;
     padding-bottom: 4px;
+
 }
 
-
+.menu-btn {
+    margin-bottom: 0px;
+    border-size: 0px;
+    border-radius: 0px;
+}
 
 .container {
     background-color: #FF0000;
@@ -97,6 +108,31 @@ button:active {
     background-color: #8c00ff;
 }
 
+.regular {
+    font-size: 40px;
+}
+
+.jumbotron {
+    width:100%;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+    background-color: #8c00ff;
+}
+
+.row {
+    flex-direction: column;
+    width: 100%;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.title {
+    font-size: 150px;
+    text-align: center;
+    width:200px;
+    background-color: #8c00ff;
+}
 
 .btn-lbl {
     text-align: left;
@@ -121,14 +157,6 @@ button:active {
     padding-right: 8px;
     padding-bottom: 8px;
 
-    max-width: 50%;
-}
-
-.title {
-    font-size: 72px;
-    height: 0px;
-    width: 0px;
-	margin-bottom: 8px;
 }
 
 .tab {
@@ -150,4 +178,4 @@ button:active {
 	background-color: #000000FF;
 	border-size: 2px;
 	margin-left: 8px;
-}
+}*/

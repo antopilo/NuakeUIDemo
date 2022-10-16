@@ -22,59 +22,63 @@ float median(float r, float g, float b) {
     return max(min(r, g), min(max(r, g), b));
 }
 
-vec3 sdf_triplet_alpha( vec3 sdf, float horz_scale, float vert_scale, float vgrad ) {
-    float doffset = 1.0 - textureSize(u_Atlas, 0).x;
-    float hint_amount = 0.5f;
-    float hdoffset = mix( doffset * horz_scale, doffset * vert_scale, vgrad );
-    float rdoffset = mix( doffset, hdoffset, hint_amount );
-    vec3 alpha = smoothstep( vec3( 0.5 - rdoffset ), vec3( 0.5 + rdoffset ), sdf );
-    alpha = pow( alpha, vec3( 1.0 + 0.2 * vgrad * hint_amount ) );
-    return alpha;
+float opacity(vec4 sdfSample)
+{
+    float r = sdfSample.r;
+    float g = sdfSample.g;
+    float b = sdfSample.b;
+    float signed_dist = median(r, g, b) - 0.5;
+    float d = fwidth(signed_dist);
+    float opacity = smoothstep(-d, d, signed_dist);
+    return opacity;
 }
 
 void main() {
     vec2 textSize = textureSize(u_Atlas, 0);
 
-    vec2 uv = vec2(mix(int(u_TexturePos.x) / textSize.x, u_TextureScale.x / textSize.x, v_UV.x),
-                   mix(int(u_TextureScale.y) / textSize.y, u_TexturePos.y / textSize.y, 1.0 - v_UV.y));
+    vec2 uv = vec2(mix(int(u_TexturePos.x) / textSize.x, u_TextureScale.x / int(textSize.x), v_UV.x),
+                   mix(u_TextureScale.y / int(textSize.y), int(u_TexturePos.y) / textSize.y, 1.0 - v_UV.y));
 
+    const float subPixelAmount = 0.5;
     vec2 unitRange = 1.0 / textSize;
+    vec2 uvLeft = uv - vec2(unitRange.x * subPixelAmount, 0);
+    vec2 uvRight = uv + vec2(unitRange.x * subPixelAmount, 0);
+    vec2 uvUp = uv + vec2(0, unitRange.y * subPixelAmount);
+    float middle = opacity(texture(u_Atlas, uv));
+    float left = opacity(texture(u_Atlas, uvLeft));
+    float right = opacity(texture(u_Atlas, uvRight));
+    float up = opacity(texture(u_Atlas, uvUp));
 
-    vec4 msd = texture(u_Atlas, uv + vec2( unitRange.x, 0.0 )).rgba;
-    float sdf_north = texture( u_Atlas, uv + vec2( 0.0, unitRange.y ) ).r;
-    float sdf_east  = texture( u_Atlas, uv + vec2( unitRange.x, 0.0 ) ).r;
+    vec3 color = u_FontColor.rgb;
+    bool direction = false;
+   
+    const float ratio = 0.6666;
+    const float curve_tolerance = 0.07;
+    const float h_tolerance = 0.6666;
+    
+    const bool subpixel = true;
+    if(subpixel)
+    {
+        const float h_diff = abs(middle - right);
+        const float h_diff_r = abs(middle - left);
 
-    float sd = median(msd.r, msd.g, msd.b);
+        float curveAmount = abs(up - middle);
+        if(h_diff > h_tolerance && curveAmount < curve_tolerance)
+        {
+            color.b *= right;
+            color.g *= mix(right, middle, ratio);
+            color.r *= middle;
+            direction = true;
+        }
 
-    float r = msd.r;
-    float g = msd.g;
-    float b = msd.b;
-    float median = max(min(r, g), min(max(r, g), b));
-    float signed_dist = median - 0.5;
-    float d = fwidth(signed_dist);
-    float opacity = smoothstep(-d, d, signed_dist);
-
-    float horz_scale  = 0.33333; // Should be 0.33333, a subpixel size, but that is too colorful
-    float vert_scale  = 0.6;
-
-    vec2  sgrad     = vec2( sdf_east - msd.a, sdf_north - msd.a );
-    float sgrad_len = max( length( sgrad ), 1.0 / 128.0 );
-    vec2  grad      = sgrad / vec2( sgrad_len );
-    float vgrad = abs( grad.y ); // 0.0 - vertical stroke, 1.0 - horizontal one
-
-    // Subpixel SDF samples
-    vec2  subpixel = vec2( 0.3333 * unitRange.x, 0 );
-
-    // For displays with vertical subpixel placement:
-    // vec2 subpixel = vec2( 0.0, subpixel_offset );
-
-    float sdf_sp_n  = texture( u_Atlas, uv - subpixel ).r;
-    float sdf_sp_p  = texture( u_Atlas, uv + subpixel ).r;
-    vec3 triplet_alpha = sdf_triplet_alpha( vec3( sdf_sp_n, msd.a, sdf_sp_p ), horz_scale, vert_scale, vgrad );
-
-    // For BGR subpixels:
-    // triplet_alpha = triplet.bgr
-    //FragColor = mix(vec4(0), u_FontColor, opacity);
-    FragColor = vec4( u_FontColor.rgb , opacity);
-
+        if(h_diff_r > h_tolerance && curveAmount < curve_tolerance)
+        {
+            color.r *= left;
+            color.g *= mix(left, middle, ratio);
+            color.b *= middle;
+            direction = true;
+        }
+    }
+    
+    FragColor = vec4( color.rgb, middle);
 }

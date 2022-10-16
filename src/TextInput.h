@@ -77,7 +77,7 @@ public:
 
 	virtual void OnClick(InputManager* inputManager) override
 	{
-		if (!this->HasFocus())
+		if (!HasFocus())
 		{
 			while (inputManager->InputStack.size() > 0)
 			{

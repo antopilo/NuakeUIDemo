@@ -28,8 +28,8 @@
 }
 
 .btn-lbl {
-    font-size: 28px;
-    margin-left: 8px;
+    font-size: 26px;
+    width: 200px;
 }
 
 .btn {
@@ -38,6 +38,7 @@
     background-color: #22222200;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
 }
 
 .btn:hover {
@@ -48,7 +49,18 @@
     background-color: #194176FF;
 }
 
-#arrow {
-    width: 5px;
-    height: 12px;
+.arrow {
+    width: 20px;
+    height: 20px;
+    background-image: "../icons/blendicons/rightarrow_thin.svg";
+}
+
+.test-container {
+    width: 100%;
+    height: 20px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
 }

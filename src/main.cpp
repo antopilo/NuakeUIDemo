@@ -18,6 +18,7 @@ public:
 	~myDataModel() = default;
 
 	int tabSelected = 0;
+	NodePtr fileMenuContext;
 };
 
 class Main
@@ -36,31 +37,19 @@ public:
 
 		auto canvas = parser.Parse("../resources/UI/demo.html");
 		
-		int width;
-		int height;
-		int channel;
-		unsigned char* m_LocalBuffer;
-		stbi_set_flip_vertically_on_load(1);
-		m_LocalBuffer = stbi_load("../resources/icons/icon.png", &width, &height, &channel, 4);
-		
-		auto texture = std::make_shared<NuakeRenderer::Texture>(NuakeRenderer::TextureFlags{}, Vector2(width, height), m_LocalBuffer);
-		
-		if (NodePtr logo; canvas->FindNodeByID<Node>("logo", logo))
+		// system menu
+		ButtonPtr fileMenuBtn;
+		if (canvas->FindNodeByID<Button>("file-menu-btn", fileMenuBtn))
 		{
-			logo->ComputedStyle.BackgroundImage = texture;
+			auto callback = [this](NuakeUI::Button& btn)
+			{
+				TabDataModel.fileMenuContext->ComputedStyle.Visibility =  (VisibilityType)!(bool)TabDataModel.fileMenuContext->ComputedStyle.Visibility;
+			};
+
+			fileMenuBtn->SetClickCallback(callback);
 		}
 
-		stbi_image_free(m_LocalBuffer);
-		stbi_set_flip_vertically_on_load(1);
-		m_LocalBuffer = stbi_load("../resources/icons/arrow.png", &width, &height, &channel, 4);
-
-		auto texture2 = std::make_shared<NuakeRenderer::Texture>(NuakeRenderer::TextureFlags{}, Vector2(width, height), m_LocalBuffer);
-
-		if (NodePtr arrow; canvas->FindNodeByID<Node>("arrow", arrow))
-		{
-			arrow->ComputedStyle.BackgroundImage = texture2;
-		}
-		stbi_image_free(m_LocalBuffer);
+		canvas->FindNodeByID<Node>("file-context-menu", TabDataModel.fileMenuContext);
 
 		// Creating data model and binding it to a node.
 		auto dataModel = DataModel::New("myDataModel");

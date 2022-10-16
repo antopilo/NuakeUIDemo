@@ -10,15 +10,15 @@
 .context-menu {
     margin-top: 2px;
     position: absolute;
-    top: 30;
-    left: 95;
+    top: 32;
+    left: 52;
     background-color: #222222FF;
     border-radius: 6px;
     padding-top: 8px;
     padding-bottom: 8px;
 
     border-size: 1px;
-    border-color: #333333FF
+    border-color: #333333FF;
 }
 
 .menu-btn {
@@ -48,6 +48,7 @@
     padding-right: 8px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 .context-btn:hover {
@@ -55,21 +56,26 @@
 }
 
 .context-btn-lbl {
-    font-size: 28px;
+    font-size: 24px;
 }
 
 #logo {
-    margin-left: 3px;
-    margin-right: 4px;
-    margin-top: 4px;
-    margin-bottom: 4px;
+
     width: 22px;
     height: 22px;
     background-color: #FFFFFFFF;
+    background-image: "../icons/blendicons/seq_chroma_scope.svg";
 }
 
-#arrow {
-    width: 8px;
-    height: 8px;
-    background-color: #FFFFFFFF;
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.edit-icon {
+    background-image: "../icons/blendicons/greasepencil.svg";
+}
+
+.menu-icon {
+    background-image: "../icons/blendicons/file.svg";
 }

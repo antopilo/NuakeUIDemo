@@ -24,10 +24,10 @@ public:
 		return state == GLFW_PRESS;
 	}
 
-	bool IsKeyPressed(uint32_t key, uint32_t state = GLFW_PRESS) override
+	bool IsKeyPressed(uint32_t key) override
 	{
 		auto states = glfwGetKey(mWindow, key);
-		return states == state;
+		return states == GLFW_PRESS;
 	}
 
 	float GetMouseX() override

@@ -93,34 +93,30 @@ public:
 
 	Main() : TabDataModel(myDataModel())
 	{
-		using namespace NuakeRenderer;
 		using namespace NuakeUI;
 
-		auto window = Window("NuakeUI Demo", { 1280, 720 });
-		glEnable(GL_MULTISAMPLE);
-		glfwWindowHint(GLFW_SAMPLES, 2);
-
-		ApplyNuakeImGuiTheme();
+		// Initialize renderer
+		auto window = NuakeRenderer::Window("NuakeUI Demo", { 1280, 720 });
+		NuakeRenderer::SetMSAA(true);
+		NuakeRenderer::SetMSAASamples(2);
+		NuakeRenderer::ApplyNuakeImGuiTheme();
 
 		_inputmanager = new MyInputManager(window);
 		_canvas = LoadCanvas();
 		_canvas->SetInputManager(_inputmanager);
 		SetCallbacks(_canvas);
+
 		while (!window.ShouldClose())
 		{
-			Begin();
+			NuakeRenderer::Begin();
 
-			if (glfwGetKey(window.GetHandle(), GLFW_KEY_1))
-			{
-				Renderer::Get().ReloadShaders();
-			}
-
-			if (glfwGetKey(window.GetHandle(), GLFW_KEY_F5) || needsReload)
+			if (_inputmanager->IsKeyPressed(GLFW_KEY_F5) || needsReload)
 			{
 				Renderer::Get().ReloadShaders();
 				_canvas = LoadCanvas();
 				_canvas->SetInputManager(_inputmanager);
 				SetCallbacks(_canvas);
+
 				needsReload = false;
 			}
 

@@ -4,12 +4,13 @@
 #include "MyInputManager.h"
 #include "SliderNode.h"
 #include <NuakeUI/Inspector.h>
-#include "TextInput.h"
 
 #include <NuakeUI/Font/FontManager.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+
+using namespace NuakeUI;
 
 class myDataModel
 {
@@ -26,27 +27,32 @@ class Main
 public:
 	myDataModel& TabDataModel;
 
-	auto LoadCanvas()
+	CanvasPtr _canvas;
+	InputManager* _inputmanager;
+
+	bool needsReload = false;
+
+	void SetCallbacks(CanvasPtr canvas)
 	{
-		using namespace NuakeUI;
-
-		// Load HTML file.
-		auto parser = CanvasParser();
-		parser.RegisterNodeType("slider", SliderNode::New);
-		parser.RegisterNodeType("textInput", TextInput::New);
-
-		auto canvas = parser.Parse("../resources/UI/demo.html");
-		
 		// system menu
 		ButtonPtr fileMenuBtn;
 		if (canvas->FindNodeByID<Button>("file-menu-btn", fileMenuBtn))
 		{
 			auto callback = [this](NuakeUI::Button& btn)
 			{
-				TabDataModel.fileMenuContext->ComputedStyle.Visibility =  (VisibilityType)!(bool)TabDataModel.fileMenuContext->ComputedStyle.Visibility;
+				TabDataModel.fileMenuContext->ComputedStyle.Visibility = (VisibilityType)!(bool)TabDataModel.fileMenuContext->ComputedStyle.Visibility;
 			};
 
 			fileMenuBtn->SetClickCallback(callback);
+		}
+
+		ButtonPtr reloadBtn;
+		if (canvas->FindNodeByID<Button>("reload-btn", reloadBtn))
+		{
+			reloadBtn->SetClickCallback([this](NuakeUI::Button& btn)
+				{
+					needsReload = true;
+				});
 		}
 
 		canvas->FindNodeByID<Node>("file-context-menu", TabDataModel.fileMenuContext);
@@ -63,14 +69,25 @@ public:
 			{
 				TabDataModel.tabSelected = btn.GetIndex();
 			};
-		
+
 			//for (uint32_t i = 0; i < btnContainer->GetChildrens().size(); i++)
 			//{
 			//	ButtonPtr button = btnContainer->GetChild<Button>(i);
 			//	button->SetClickCallback((callback));
 			//}
 		}
+	}
 
+	CanvasPtr LoadCanvas()
+	{
+		using namespace NuakeUI;
+
+		// Load HTML file.
+		auto parser = CanvasParser();
+		parser.RegisterNodeType("slider", SliderNode::New);
+
+		auto canvas = parser.Parse("../resources/UI/demo.html");
+		
 		return canvas;
 	}
 
@@ -78,20 +95,17 @@ public:
 	{
 		using namespace NuakeRenderer;
 		using namespace NuakeUI;
-		
-
 
 		auto window = Window("NuakeUI Demo", { 1280, 720 });
 		glEnable(GL_MULTISAMPLE);
-		glfwWindowHint(GLFW_SAMPLES, 8);
+		glfwWindowHint(GLFW_SAMPLES, 2);
 
 		ApplyNuakeImGuiTheme();
 
-		auto inputManager = new MyInputManager(window);
-
-		auto canvas = LoadCanvas();
-		canvas->SetInputManager(inputManager);
-
+		_inputmanager = new MyInputManager(window);
+		_canvas = LoadCanvas();
+		_canvas->SetInputManager(_inputmanager);
+		SetCallbacks(_canvas);
 		while (!window.ShouldClose())
 		{
 			Begin();
@@ -101,17 +115,20 @@ public:
 				Renderer::Get().ReloadShaders();
 			}
 
-			if (glfwGetKey(window.GetHandle(), GLFW_KEY_F5))
+			if (glfwGetKey(window.GetHandle(), GLFW_KEY_F5) || needsReload)
 			{
-				canvas = LoadCanvas();
-				canvas->SetInputManager(inputManager);
+				Renderer::Get().ReloadShaders();
+				_canvas = LoadCanvas();
+				_canvas->SetInputManager(_inputmanager);
+				SetCallbacks(_canvas);
+				needsReload = false;
 			}
 
-			canvas->ComputeLayout(window.GetWindowSize());
-			canvas->Tick();
-			canvas->Draw();
+			_canvas->ComputeLayout(window.GetWindowSize());
+			_canvas->Tick();
+			_canvas->Draw();
 
-			NuakeUI::DrawInspector(canvas);
+			NuakeUI::DrawInspector(_canvas);
 
 			window.SwapBuffers();
 		}

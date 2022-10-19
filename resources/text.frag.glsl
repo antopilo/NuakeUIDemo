@@ -36,10 +36,10 @@ float opacity(vec4 sdfSample)
 void main() {
     vec2 textSize = textureSize(u_Atlas, 0);
 
-    vec2 uv = vec2(mix(int(u_TexturePos.x) / textSize.x, u_TextureScale.x / int(textSize.x), v_UV.x),
-                   mix(u_TextureScale.y / int(textSize.y), int(u_TexturePos.y) / textSize.y, 1.0 - v_UV.y));
+    vec2 uv = vec2(mix(u_TexturePos.x / textSize.x, u_TextureScale.x / textSize.x, v_UV.x),
+                   mix(u_TextureScale.y / textSize.y, u_TexturePos.y / textSize.y, 1.0 - v_UV.y));
 
-    const float subPixelAmount = 0.5;
+    const float subPixelAmount = 1.333;
     vec2 unitRange = 1.0 / textSize;
     vec2 uvLeft = uv - vec2(unitRange.x * subPixelAmount, 0);
     vec2 uvRight = uv + vec2(unitRange.x * subPixelAmount, 0);
@@ -52,33 +52,22 @@ void main() {
     vec3 color = u_FontColor.rgb;
     bool direction = false;
    
-    const float ratio = 0.6666;
-    const float curve_tolerance = 0.07;
-    const float h_tolerance = 0.6666;
+    const float ratio = 1.6666;
+    const float curve_tolerance = 1.0;
+    const float h_tolerance = 0;
     
-    const bool subpixel = true;
-    if(subpixel)
+    const bool subpixel = false;
+    const float subpixel_threshold = 1;
+    float curveAmount = up - middle;
+    bool mid = middle < (subpixel_threshold);
+    bool leftt = left < subpixel_threshold;
+    bool rightt = right < subpixel_threshold;
+    if(subpixel &&(middle < subpixel_threshold) && curveAmount < curve_tolerance)
     {
-        const float h_diff = abs(middle - right);
-        const float h_diff_r = abs(middle - left);
-
-        float curveAmount = abs(up - middle);
-        if(h_diff > h_tolerance && curveAmount < curve_tolerance)
-        {
-            color.b *= right;
-            color.g *= mix(right, middle, ratio);
-            color.r *= middle;
-            direction = true;
-        }
-
-        if(h_diff_r > h_tolerance && curveAmount < curve_tolerance)
-        {
-            color.r *= left;
-            color.g *= mix(left, middle, ratio);
-            color.b *= middle;
-            direction = true;
-        }
+        color.r = left;
+        color.g = middle;
+        color.b = right;
     }
     
-    FragColor = vec4( color.rgb, middle);
+    FragColor = vec4(color.rgb, middle);
 }

@@ -10,9 +10,9 @@ out vec2 v_UV;
 
 void main() {
 	v_UV = UV;
-	int x = int(Position.x);
-	int y = int(Position.y);
-	int z = int(Position.z);
+	float x = Position.x;
+	float y = Position.y;
+	float z = Position.z;
 
 	gl_Position = u_View * u_Model * vec4(x, y, z, 1.0f);
 }

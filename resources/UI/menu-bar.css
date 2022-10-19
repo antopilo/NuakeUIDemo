@@ -10,7 +10,7 @@
 .context-menu {
     margin-top: 2px;
     position: absolute;
-    top: 32;
+    top: 42;
     left: 52;
     background-color: #222222FF;
     border-radius: 6px;
@@ -23,10 +23,9 @@
 
 .menu-btn {
     background-color: #00000000;
-    height: 30px;
-    padding-left: 16px;
-    padding-right: 16px;
-    
+    height: 40px;
+    width: 40px;
+    align-items: center;
     justify-content: center;
     border-radius: 0px;
 }
@@ -78,4 +77,8 @@
 
 .menu-icon {
     background-image: "../icons/blendicons/file.svg";
+}
+
+.menu-reload {
+    background-image: "../icons/blendicons/file_refresh.svg"
 }

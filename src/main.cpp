@@ -60,6 +60,7 @@ public:
 		// Creating data model and binding it to a node.
 		auto dataModel = DataModel::New("myDataModel");
 		dataModel->Bind("tab", &TabDataModel.tabSelected);
+
 		canvas->GetRoot()->SetDataModel(dataModel);
 
 		ButtonPtr btnContainer;
@@ -70,11 +71,11 @@ public:
 				TabDataModel.tabSelected = btn.GetIndex();
 			};
 
-			//for (uint32_t i = 0; i < btnContainer->GetChildrens().size(); i++)
-			//{
-			//	ButtonPtr button = btnContainer->GetChild<Button>(i);
-			//	button->SetClickCallback((callback));
-			//}
+			for (uint32_t i = 0; i < btnContainer->GetChildrens().size(); i++)
+			{
+				ButtonPtr button = btnContainer->GetChild<Button>(i);
+				button->SetClickCallback((callback));
+			}
 		}
 	}
 
@@ -97,7 +98,7 @@ public:
 
 		// Initialize renderer
 		auto window = NuakeRenderer::Window("NuakeUI Demo", { 1280, 720 });
-		NuakeRenderer::SetMSAA(true);
+		NuakeRenderer::SetMSAA(false);
 		NuakeRenderer::SetMSAASamples(2);
 		NuakeRenderer::ApplyNuakeImGuiTheme();
 

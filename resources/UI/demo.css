@@ -4,41 +4,57 @@
 .left-container {
     background-color: #141414FF;
     height: 100%;
+    width: 100%;
     flex-direction: column;
     padding-bottom: 32px;
     overflow: scroll;
-    width: 300px;
 }
-/*
-.root {
-    width: 100%;
+
+.right-container
+{
     height: 100%;
+    width: 100%;
+    padding-left: 8px;
+    padding-top: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    display: flex;
+}
+
+.visible {
+    height: 100%;
+    width: 100%;
+    visibility: visible;
+}
+
+.hidden {
+    height: 0px;
+    width: 0px;
+    visibility: hidden;
+}
+
+
+.tab {
     flex-direction: column;
-    background-color: #181818FF;
-}
-
-.nuakeUIText {
-    font-size: 72px;
-}
-
-.main {
-    width: 100%;
     height: 100%;
-    flex-direction: row;
+    width: 100%;
+    display: flex;
 }
 
-
-
-
-
-.welcome-wrapper{
-    width:100%;
-    height:100%;
-    justify-content: flex-start;
-    align-items: center;
+.section-title {
+	 margin-bottom: 8px;
 }
 
+.btn-primary {
+    background-color: #44CC44FF;
+}
 
+.btn-secondary {
+	border-color: #555555FF;
+	background-color: #000000FF;
+	border-size: 2px;
+	margin-left: 8px;
+}
 
 .tab {
     width: 100%;
@@ -47,10 +63,28 @@
     align-items: flex-start;
 }
 
-.right-container {
+
+.root {
     width: 100%;
     height: 100%;
-    background-color: #181818;
+}
+
+.nuakeUIText {
+    font-size: 72px;
+}
+
+.main {
+    flex-direction: row;
+    display: flex;
+    width:100%;
+    height: 100%;
+}
+
+.welcome-wrapper{
+    width:100%;
+    height:100%;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .round {
@@ -72,22 +106,8 @@
     font-size: 100px;
 }
 
-button {
-    background-color: #00000000;
-    height: 40px;
-    margin-bottom: 4px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 4px;
-    padding-bottom: 4px;
 
-}
 
-.menu-btn {
-    margin-bottom: 0px;
-    border-size: 0px;
-    border-radius: 0px;
-}
 
 .container {
     background-color: #FF0000;
@@ -96,28 +116,16 @@ button {
     overflow: scroll;
 }
 
-button:hover {
-    background-color: #222222FF;
-}
-
-button:active {
-    background-color: #ff00d4FF;
-}
-
-.btn-activated {
-    background-color: #8c00ff;
-}
 
 .regular {
     font-size: 40px;
 }
 
 .jumbotron {
-    width:100%;
     height: 300px;
     align-items: center;
     justify-content: center;
-    background-color: #8c00ff;
+    background-color: #00ff04;
 }
 
 .row {
@@ -129,53 +137,10 @@ button:active {
 
 .title {
     font-size: 150px;
-    text-align: center;
-    width:200px;
-    background-color: #8c00ff;
-}
-
-.btn-lbl {
     text-align: left;
-    font-size: 32px;
+    width:200px;
 }
 
-.visible {
-    height: 100%;
-    width: 100%;
-    visibility: visible;
-}
 
-.hidden {
-    height: 0px;
-    width: 0px;
-    visibility: hidden;
-}
 
-.right-container {
-    padding-left: 8px;
-    padding-top: 8px;
-    padding-right: 8px;
-    padding-bottom: 8px;
 
-}
-
-.tab {
-    flex-direction: column;
-    width:100%;
-    margin-right: 8px;
-}
-
-.section-title {
-	 margin-bottom: 8px;
-}
-
-.btn-primary {
-    background-color: #44CC44FF;
-}
-
-.btn-secondary {
-	border-color: #555555FF;
-	background-color: #000000FF;
-	border-size: 2px;
-	margin-left: 8px;
-}*/

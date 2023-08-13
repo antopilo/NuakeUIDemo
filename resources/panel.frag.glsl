@@ -64,9 +64,8 @@ void main() {
     
     if(u_Border > 0.f)
     {
-        float borderAlpha = 1.f;
-        if(u_BorderRadius > 0.f)
-            borderAlpha = ShouldDiscard(coords, u_Border, u_Size, u_BorderRadius);
+        float borderAlpha = ShouldDiscard(coords, u_Border, u_Size, u_BorderRadius);
+
 
 		if(a == 1.f)
         { 
